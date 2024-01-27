@@ -17,7 +17,7 @@ export default function KAnalysisPage() {
       <KCaseTwo onButtonClick={onButtonClick} />
 
       <Box sx={{ marginTop: '20px' }}>
-        <Card title="" bgColor="#D989B5" data={filteredList} />
+        <Card title="" bgColor="#37B5B6" data={filteredList} />
       </Box>
     </Box>
   );

@@ -62,18 +62,18 @@ export default function NavButton() {
         <List>
           <ListItem disablePadding>
             <ListItemButton
-              onClick={() => onListItemClick(routes.test1)}
+              onClick={() => onListItemClick(routes.Monitor)}
               sx={{ padding: '5px 20px' }}
             >
-              <ListItemText primary="page 1" />
+              <ListItemText primary="Monitor" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton
-              onClick={() => onListItemClick(routes.test2)}
+              onClick={() => onListItemClick(routes.Analysis)}
               sx={{ padding: '5px 20px' }}
             >
-              <ListItemText primary="page 2" />
+              <ListItemText primary="Analysis" />
             </ListItemButton>
           </ListItem>
         </List>

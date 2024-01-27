@@ -7,16 +7,16 @@ import Monitor from './pages/Monitor';
 import './App.css';
 
 export const routes = {
-  test1: 'test1',
-  test2: 'test2',
+  Monitor: 'monitor',
+  Analysis: 'analysis',
 };
 
 export const Root = () => (
   <>
     <Routes>
-      <Route path={routes.test1} element={<Monitor />} />
-      <Route path={routes.test2} element={<Analysis />} />
-      <Route path="/" element={<Navigate to={routes.test1} />} />
+      <Route path={routes.Monitor} element={<Monitor />} />
+      <Route path={routes.Analysis} element={<Analysis />} />
+      <Route path="/" element={<Navigate to={routes.Analysis} />} />
     </Routes>
   </>
 );

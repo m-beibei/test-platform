@@ -223,7 +223,7 @@ export default function PickPage() {
       </Box>
 
       <Box sx={{ marginTop: '20px' }}>
-        <Card title="" bgColor="#D989B5" data={list} />
+        <Card title="" bgColor="#018383" data={list} />
       </Box>
     </Box>
   );

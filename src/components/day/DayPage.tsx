@@ -51,7 +51,7 @@ export default function DayPage() {
         <Box sx={{ marginTop: '20px' }}>
           <Card
             title={getTitle(type, days)}
-            bgColor="#3AA6B9"
+            bgColor="#90C8AC"
             data={filteredSymbols}
           />
         </Box>
