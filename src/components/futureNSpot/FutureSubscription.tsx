@@ -49,7 +49,6 @@ export default function FutureSubscription(props: FutureSubscriptionProps) {
   const [isListening, setIsListening] = useState<boolean>(false);
   const [messageData, setMessageData] = useState<Ticker[]>([]);
   const [btcPrice, setBtcPrice] = useState<string>('');
-  const [viewingSymbol, setViewingSymbol] = useState<string>();
   const [bigModeOn, setBigModeOn] = useState<boolean>(false);
 
   const startListening = () => {
@@ -105,9 +104,7 @@ export default function FutureSubscription(props: FutureSubscriptionProps) {
         <Button
           onClick={() => setIsListening(!isListening)}
           disabled={
-            !filter.futureMinutes ||
-            !filter.futureUp ||
-            !filter.futureBigUp
+            !filter.futureMinutes || !filter.futureUp || !filter.futureBigUp
           }
         >
           {isListening ? '停止监听' : '开始监听'}
@@ -129,11 +126,9 @@ export default function FutureSubscription(props: FutureSubscriptionProps) {
         isBigMode={bigModeOn}
         filterData={filter}
         data={messageData}
-        onItemClick={setViewingSymbol}
       />
       <FutureUpDownK
         data={messageData}
-        onItemClick={setViewingSymbol}
         isListening={isListening}
         btcPrice={btcPrice}
       />

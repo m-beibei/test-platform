@@ -22,8 +22,6 @@ import { VolumePageData } from './VolumePage';
   ]
 */
 
-// 页面在找哪个币短时间内vol突然变大 （涨跌都算）
-
 export interface VolumeList {
   symbol: string;
   price: string;
@@ -49,9 +47,8 @@ type Interval =
   | '3d'
   | '1w';
 
-
 interface FilterType {
-  interval: Interval; // k线时间间隔
+  interval: Interval;
 }
 
 const defaultFilter: FilterType = {
@@ -92,7 +89,6 @@ export default function VolumeCal(props: VolumeCalProps) {
       ),
     ).then((values) => {
       values.forEach((value) => {
-        // 过滤出busd不考虑 和不满足81根线的不考虑
         if (value.symbol.slice(-4) === 'USDT' && value.klines.length === 150) {
           all.push(value);
         }
@@ -104,7 +100,6 @@ export default function VolumeCal(props: VolumeCalProps) {
 
   const getVolumeMulData = async () => {
     const allList = await getListForAll();
-console.log('allList', allList)
     const list: VolumeList[] = [];
 
     allList.forEach((item) => {
@@ -114,10 +109,10 @@ console.log('allList', allList)
       let maxVolumeMultiplier = -Infinity;
 
       for (let i = 20; i < klines.length; i++) {
-        const previousTwenty = klines.slice(i - 20, i); // 获取前20个k
+        const previousTwenty = klines.slice(i - 20, i);
         const average =
-          previousTwenty.reduce((sum, k) => sum + Number(k[5]), 0) / 20; // 计算前20个k volume的平均值
-        const multiplier = Number(klines[i][5]) / average; // 计算当前数字与平均值的倍数
+          previousTwenty.reduce((sum, k) => sum + Number(k[5]), 0) / 20;
+        const multiplier = Number(klines[i][5]) / average;
         if (multiplier > maxVolumeMultiplier) {
           maxVolumeMultiplier = multiplier;
           position = i;
@@ -144,7 +139,7 @@ console.log('allList', allList)
     const upList = allList
       .filter((l) => l.highVolumeUp)
       .sort((a, b) => b.highVolumeMultiper - a.highVolumeMultiper)
-      .slice(0, 200)
+      .slice(0, 150)
       .sort((a, b) => b.highVolumePosition - a.highVolumePosition);
 
     onButtonClick({
@@ -162,7 +157,9 @@ console.log('allList', allList)
           size="small"
           value={filter.interval}
           label="Interval"
-          onChange={(event) => onFilterChange(event.target.value as Interval, 'interval')}
+          onChange={(event) =>
+            onFilterChange(event.target.value as Interval, 'interval')
+          }
           sx={{ marginRight: '5px' }}
         >
           {[

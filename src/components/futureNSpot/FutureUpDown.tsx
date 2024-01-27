@@ -13,7 +13,6 @@ interface QuickUpDownProps {
   data: Ticker[];
   filterData: FilterType;
   isBigMode?: boolean;
-  onItemClick?: (symbol: string) => void;
 }
 
 let newUpFastGroup: { symbolData: HighlightSymbol; time: number }[] = [];
@@ -21,7 +20,7 @@ let newBigUpFastGroup: { symbolData: HighlightSymbol; time: number }[] = [];
 let allList: Record<string, { price: number; timestamp: number }> = {};
 
 export default function QuickUpDown(props: QuickUpDownProps) {
-  const { data, filterData, isBigMode, onItemClick } = props;
+  const { data, filterData, isBigMode } = props;
   const [filter, setFilter] = useState(filterData);
   const [upFastGroup, setUpFastGroup] = useState<HighlightSymbol[]>([]);
   const [bigUpFastGroup, setBigUpFastGroup] = useState<HighlightSymbol[]>([]);
@@ -96,10 +95,7 @@ export default function QuickUpDown(props: QuickUpDownProps) {
   useEffect(() => {
     setFilter(filterData);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    filterData.futureUp,
-    filterData.futureMinutes,
-  ]);
+  }, [filterData.futureUp, filterData.futureMinutes]);
 
   useEffect(() => {
     calculating();
@@ -156,7 +152,6 @@ export default function QuickUpDown(props: QuickUpDownProps) {
         bgColor="#A367B1"
         data={upFastList}
         bigMode={isBigMode}
-        onItemClick={onItemClick}
         noActionButtons
       />
       <Card
@@ -164,7 +159,6 @@ export default function QuickUpDown(props: QuickUpDownProps) {
         bgColor="#5D3587"
         data={bigUpFastList}
         bigMode={isBigMode}
-        onItemClick={onItemClick}
         noActionButtons
       />
     </Box>

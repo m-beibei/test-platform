@@ -9,7 +9,6 @@ import {
   ResponsiveContainer,
   Line,
   ComposedChart,
-  BarChart,
 } from 'recharts';
 
 export interface VolumeChartData {
@@ -20,10 +19,9 @@ export interface VolumeChartData {
   buySellDiff: number | null;
 }
 
-export interface VolumeChartProps {
+export interface VolumePriceChartProps {
   data: VolumeChartData[];
   lineColor: string;
-  withBuySellChart?: boolean;
 }
 
 export function CustomBar(props: any) {
@@ -50,79 +48,53 @@ export function BuySellCustomBar(props: any) {
   );
 }
 
-export default function VolumeChart(props: VolumeChartProps) {
-  const { data, lineColor, withBuySellChart } = props;
+export default function VolumePriceChart(props: VolumePriceChartProps) {
+  const { data, lineColor } = props;
 
   return (
     <Box sx={{ marginTop: '20px', width: '100%' }}>
-      {!withBuySellChart && (
-        <ResponsiveContainer width="100%" height={180}>
-          <ComposedChart
-            data={data}
-            margin={{ top: 0, right: 20, left: 20, bottom: 10 }}
-          >
-            <YAxis
-              yAxisId={1}
-              tickLine={false}
-              axisLine={false}
-              dataKey="volume"
-              fontSize={12}
-              hide
-            />
-            <YAxis
-              yAxisId={2}
-              tickLine={false}
-              axisLine={false}
-              domain={['dataMin', 'dataMax']}
-              dataKey="price"
-              orientation="right"
-              fontSize={12}
-              hide
-            />
-            <XAxis dataKey="ts" tickLine={false} fontSize={12} />
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <ReferenceLine y={0} yAxisId={1} stroke="#666" />
-            <Bar
-              dataKey="volume"
-              yAxisId={1}
-              strokeWidth={0.5}
-              shape={CustomBar}
-            />
-            <Line
-              type="linear"
-              yAxisId={2}
-              dataKey="price"
-              dot={false}
-              strokeWidth={2}
-              stroke={lineColor}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      )}
-      {withBuySellChart && (
-        <ResponsiveContainer width="100%" height={180}>
-          <ComposedChart
-            data={data}
-            margin={{ top: 0, right: 20, left: 20, bottom: 10 }}
-          >
-            <YAxis
-              tickLine={false}
-              axisLine={false}
-              dataKey="buySellDiff"
-              fontSize={12}
-              hide
-            />
-            <XAxis dataKey="ts" tickLine={false} fontSize={12} />
-            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-            <ReferenceLine y={0} stroke="#666" />
-            <Bar
-              dataKey="buySellDiff"
-              strokeWidth={0.5}
-              shape={BuySellCustomBar}
-            />
-          </ComposedChart>
-        </ResponsiveContainer>
-      )}
+      <ResponsiveContainer width="100%" height={180}>
+        <ComposedChart
+          data={data}
+          margin={{ top: 0, right: 20, left: 20, bottom: 10 }}
+        >
+          <YAxis
+            yAxisId={1}
+            tickLine={false}
+            axisLine={false}
+            dataKey="volume"
+            fontSize={12}
+            hide
+          />
+          <YAxis
+            yAxisId={2}
+            tickLine={false}
+            axisLine={false}
+            domain={['dataMin', 'dataMax']}
+            dataKey="price"
+            orientation="right"
+            fontSize={12}
+            hide
+          />
+          <XAxis dataKey="ts" tickLine={false} fontSize={12} />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <ReferenceLine y={0} yAxisId={1} stroke="#666" />
+          <Bar
+            dataKey="volume"
+            yAxisId={1}
+            strokeWidth={0.5}
+            shape={CustomBar}
+          />
+          <Line
+            type="linear"
+            yAxisId={2}
+            dataKey="price"
+            dot={false}
+            strokeWidth={2}
+            stroke={lineColor}
+          />
+        </ComposedChart>
+      </ResponsiveContainer>
     </Box>
   );
 }

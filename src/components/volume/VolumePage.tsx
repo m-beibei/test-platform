@@ -12,16 +12,13 @@ export interface VolumePageData {
 
 export default function VolumePage() {
   const [volumePageList, setVolumePageList] = useState<VolumePageData[]>([]);
-  const [volumePageTitle, setVolumePageTitle] = useState<string>('');
 
   const onButtonClick = (data: { list: VolumePageData[]; title: string }) => {
-    console.log('data.list', data.list)
     setVolumePageList(data.list);
-    setVolumePageTitle(data.title);
   };
 
   return (
-    <Box sx={{ marginTop: '20px' }}>
+    <Box sx={{ marginTop: '5px' }}>
       <Box display="flex">
         <VolumeCal onButtonClick={onButtonClick} />
       </Box>
@@ -43,11 +40,7 @@ export default function VolumePage() {
           return (
             <Box key={u.symbol}>
               <Typography>{`${u.symbol} - $${u.price}`}</Typography>
-              <VolumePriceChart
-                data={chartData}
-                lineColor={lineColor}
-                withBuySellChart={volumePageTitle === 'Recent Buy Sell'}
-              />
+              <VolumePriceChart data={chartData} lineColor={lineColor} />
             </Box>
           );
         })}

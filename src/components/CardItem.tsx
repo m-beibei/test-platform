@@ -27,16 +27,10 @@ interface CardItemProps {
   onItemClick?: (symbol: string) => void;
   bigMode?: boolean;
   noActionButtons?: boolean;
-  withTradingData?: boolean;
 }
 
 export default function CardItem(props: CardItemProps) {
-  const {
-    data,
-    onItemClick,
-    bigMode,
-    noActionButtons = false,
-  } = props;
+  const { data, onItemClick, bigMode, noActionButtons = false } = props;
   const savedInStorage = getSavedSymbolsFromStorage();
   const [savedSymbols, setSavedSymbols] = useState<string[]>(savedInStorage);
   const { notWatchList, setNotWatchList } = useDataContext();

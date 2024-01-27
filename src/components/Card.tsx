@@ -17,7 +17,6 @@ interface CardProps {
   bigMode?: boolean;
   noActionButtons?: boolean;
   withLimitHeight?: boolean;
-  seeingTradingDataSymbol?: string;
 }
 
 export default function Card(props: CardProps) {
@@ -29,7 +28,6 @@ export default function Card(props: CardProps) {
     bigMode,
     noActionButtons = false,
     withLimitHeight = false,
-    seeingTradingDataSymbol,
   } = props;
   const { notWatchList } = useDataContext();
 
@@ -56,12 +54,6 @@ export default function Card(props: CardProps) {
               key={`${index} - ${d.symbol}`}
               bigMode={bigMode}
               noActionButtons={noActionButtons}
-              withTradingData={
-                !!(
-                  seeingTradingDataSymbol &&
-                  seeingTradingDataSymbol === d.symbol
-                )
-              }
             />
           ))}
       </Box>

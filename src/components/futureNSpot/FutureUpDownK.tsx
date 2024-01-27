@@ -27,15 +27,13 @@ interface FutureUpDownKProps {
   data: Ticker[];
   isListening: boolean;
   btcPrice?: string;
-  onItemClick?: (symbol: string) => void;
 }
 
 let allList: Record<string, LongTimeMonitorSymbol> = {};
 
 export default function FutureUpDownK(props: FutureUpDownKProps) {
-  const { data, onItemClick, isListening, btcPrice } = props;
+  const { data, isListening, btcPrice } = props;
   const [upGroup, setUpGroup] = useState<LongTimeMonitorSymbol[]>([]);
-  const [downGroup, setDownGroup] = useState<LongTimeMonitorSymbol[]>([]);
 
   const calculating = () => {
     const now = Date.now();
@@ -96,18 +94,13 @@ export default function FutureUpDownK(props: FutureUpDownKProps) {
 
     const up = Object.values(allList)
       .sort((a, b) => b.amp - a.amp)
-      .slice(0, 8);
-    const down = Object.values(allList)
-      .sort((a, b) => a.amp - b.amp)
-      .slice(0, 8);
+      .slice(0, 10);
     setUpGroup(up);
-    setDownGroup(down);
   };
 
   useEffect(() => {
     // 初始化
     setUpGroup([]);
-    setDownGroup([]);
     allList = {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isListening]);
@@ -151,37 +144,6 @@ export default function FutureUpDownK(props: FutureUpDownKProps) {
       </Box>
     ),
   }));
-  // eslint-disable-next-line
-  const downList = downGroup.map((data) => ({
-    detail: `${data.symbol} - ($${data.latestPrice}) // ${Math.abs(
-      data.amp,
-    ).toFixed(2)}%`,
-    symbol: data.symbol,
-    appendix: (
-      <Box display="flex">
-        <Box display="flex">
-          {data.klines.map((k, index) => (
-            <Box
-              key={`${data.symbol}-${index}-downlist`}
-              width="3px"
-              height="20px"
-              marginRight="4px"
-              sx={{ backgroundColor: k.isUp ? 'green' : 'red' }}
-            />
-          ))}
-        </Box>
-        <IconButton
-          onClick={(e) => {
-            e.stopPropagation();
-            onOpenBinancePage(data.symbol);
-          }}
-          sx={{ padding: '2px' }}
-        >
-          <AttachMoneyIcon sx={{ fontSize: '16px' }} />
-        </IconButton>
-      </Box>
-    ),
-  }));
 
   return (
     <Box>
@@ -191,16 +153,6 @@ export default function FutureUpDownK(props: FutureUpDownKProps) {
           bgColor="#F9D923"
           data={upList}
           noActionButtons
-          onItemClick={onItemClick}
-        />
-      </Box>
-      <Box sx={{ marginTop: '16px' }}>
-        <Card
-          title={`Down (L Monitor) // $${btcPrice || ''}`}
-          bgColor="#B4E197"
-          data={downList}
-          noActionButtons
-          onItemClick={onItemClick}
         />
       </Box>
     </Box>
