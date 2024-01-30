@@ -237,7 +237,7 @@ export default function KCaseTwo(props: KCaseTwoProps) {
           disabled={Number(filter.count) < 2}
           sx={{ marginRight: '5px' }}
         >
-          大up振
+          ↑
         </Button>
         <Button
           onClick={getHighDownAmplitude}
@@ -245,7 +245,7 @@ export default function KCaseTwo(props: KCaseTwoProps) {
           disabled={Number(filter.count) < 2}
           sx={{ marginRight: '5px' }}
         >
-          大down振
+          ↓
         </Button>
         {isLoading && <CircularProgress color="secondary" size={20} />}
       </Box>
