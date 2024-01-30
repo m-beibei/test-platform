@@ -52,6 +52,7 @@ export default function KCaseOne(props: KCaseOneProps) {
     let all: {
       symbol: string;
       generalPriceChange: number;
+      totalTrades: number;
       price: string;
     }[] = [];
     await Promise.all(
@@ -75,9 +76,16 @@ export default function KCaseOne(props: KCaseOneProps) {
 
           const generalPriceChange = (close - open) / open;
 
+          const totalTrades = klines.reduce((acc, k) => {
+            const trade = Number(k[8]);
+            acc += trade;
+            return acc;
+          }, 0);
+
           all.push({
             symbol: value.symbol,
             generalPriceChange,
+            totalTrades,
             price: latest[4],
           });
         }
@@ -106,6 +114,18 @@ export default function KCaseOne(props: KCaseOneProps) {
       detail: `${tick.symbol} - ($${tick.price}) // (${(
         tick.generalPriceChange * 100
       ).toFixed(4)}%)`,
+      symbol: tick.symbol,
+    }));
+    onButtonClick(first20);
+  };
+
+  const getListForHighTotalTrades = async () => {
+    const allChangeList = await getListForAll();
+    allChangeList.sort((a, b) => b.totalTrades - a.totalTrades);
+    const first20 = allChangeList.slice(0, 20).map((tick) => ({
+      detail: `${tick.symbol} - ($${tick.price}) // (${(
+        tick.generalPriceChange * 100
+      ).toFixed(4)}%) - (${tick.totalTrades})`,
       symbol: tick.symbol,
     }));
     onButtonClick(first20);
@@ -168,6 +188,14 @@ export default function KCaseOne(props: KCaseOneProps) {
           sx={{ marginRight: '5px' }}
         >
           High D
+        </Button>
+        <Button
+          onClick={getListForHighTotalTrades}
+          variant="outlined"
+          disabled={Number(filter.count) < 2}
+          sx={{ marginRight: '5px' }}
+        >
+          High Trades
         </Button>
       </Box>
     </Box>
