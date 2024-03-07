@@ -13,4 +13,9 @@ const getAmplitude = (kline: string[]) => {
   return (high - low) / base;
 };
 
-export { isUp, isDown, getAmplitude };
+const getPriceChange = (open: number, latest: number) => {
+  const change = (latest - open) / open;
+  return change;
+};
+
+export { isUp, isDown, getAmplitude, getPriceChange };
